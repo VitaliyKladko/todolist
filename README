@@ -1,3 +1,6 @@
 todolist v.0.0.1
 
-stack: python3.10; Django 4.2.2; Postgres
+stack: python3.10; Django 4.2.2; Postgres; django-environ:
+
+- django-environ: https://django-environ.readthedocs.io/en/latest/quickstart.html
+
