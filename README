@@ -4,3 +4,11 @@ stack: python3.10; Django 4.2.2; Postgres; django-environ:
 
 - django-environ: https://django-environ.readthedocs.io/en/latest/quickstart.html
 
+start:
+1. создаем .env файл указывая переменные окружения:
+1.1 DEBUG=True
+1.2 SECRET_KEY=django-insecure-t%hqbj&va6z442=y&)z4dcd^dd=@v7-9ec5$@=@i50$w115=cn
+
+2. Переходим в todolist_postgres и запускаем контейнер c postgres-db: docker-compose up -d
+3. Применяем миграции: ./manage.py migrate
+4. Запускаем сервер: ./manage.py runserver
