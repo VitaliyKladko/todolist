@@ -12,3 +12,4 @@ start:
 2. Переходим в todolist_postgres и запускаем контейнер c postgres-db: docker-compose up -d
 3. Применяем миграции: ./manage.py migrate
 4. Запускаем сервер: ./manage.py runserver
+5. Создаем superuser и заходим в админ-панель: python manage.py createsuperuser
