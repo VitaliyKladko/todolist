@@ -6,13 +6,14 @@ info:
 - django-environ: https://django-environ.readthedocs.io/en/latest/quickstart.html
 
 start:
-1. создаем .env файл указывая переменные окружения:
+1. создаем .env файл (в корне проекта) указывая переменные окружения для конфигурации приложения:
 1.1 DEBUG=True
 1.2 SECRET_KEY=django-insecure-t%hqbj&va6z442=y&)z4dcd^dd=@v7-9ec5$@=@i50$w115=cn
 1.3 DB_NAME= ...
 1.4 DB_USER= ...
 1.5 DB_PASSWORD= ...
 1.6 DB_HOST= ...
+1.7 создаем .env файл в infra/todo_postgres и конфигурируем переменные окружения для docker-compose.yaml
 2. Переходим в infra/todo_postgres и запускаем контейнер c postgres-db: docker-compose up -d
 3. Применяем миграции: ./manage.py migrate
 4. Запускаем сервер: ./manage.py runserver
