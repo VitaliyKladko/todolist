@@ -4,8 +4,9 @@ services:
     image: postgres
     restart: always
     environment:
-      - POSTGRES_USER=vitaliy
-      - POSTGRES_PASSWORD=608752vet
+      - POSTGRES_DB=.env(DB_NAME)
+      - POSTGRES_USER=.env(DB_USER)
+      - POSTGRES_PASSWORD=.env(DB_PASSWORD)
     ports:
       - '5432:5432'
     volumes:

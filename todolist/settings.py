@@ -34,7 +34,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+# Переменные окружения хранятся в виде строк,  а значит для нестроковых значений нужно указывать их тип
+# DEBUG = env.bool('DEBUG')
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
 
@@ -88,10 +90,10 @@ WSGI_APPLICATION = "todolist.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'vitaliy',
-        'USER': 'vitaliy',
-        'PASSWORD': '608752vet',
-        'HOST': 'localhost',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
         'PORT': '5432',
     }
 }
