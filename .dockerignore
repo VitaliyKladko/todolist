@@ -1,0 +1,9 @@
+# ignore all
+**
+
+# expect
+!core
+!todolist
+!manage.py
+!requirements.txt
+!README
