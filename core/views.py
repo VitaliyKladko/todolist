@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate, login, logout
 
 from core.models import User
-from core.serializers import CreateUserSerializer, LoginSerializer, ProfileSerializer
+from core.serializers import CreateUserSerializer, LoginSerializer, ProfileSerializer, UpdatePasswordSerializer
 
 
 class SignUpView(generics.CreateAPIView):
@@ -41,3 +41,17 @@ class ProfileView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_destroy(self, instance: User) -> None:
         logout(request=self.request)
+
+
+class UpdatePasswordView(generics.GenericAPIView):
+    serializer_class = UpdatePasswordSerializer
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        request.user.set_password(serializer.validated_data['new_password'])
+        request.user.save()
+
+        return Response(serializer.data)

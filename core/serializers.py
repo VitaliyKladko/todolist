@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 from django.contrib.auth.hashers import make_password
 
 from core.models import User
@@ -33,3 +33,19 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email')
+
+
+class UpdatePasswordSerializer(serializers.Serializer):
+    old_password = PasswordField()
+    new_password = PasswordField()
+
+    def validate_old_password(self, old_password: str) -> str:
+        request = self.context['request']
+
+        if not request.user.is_authenticated:
+            raise exceptions.NotAuthenticated
+
+        if not request.user.check_password(old_password):
+            raise exceptions.ValidationError('Current password is incorrect')
+
+        return old_password
