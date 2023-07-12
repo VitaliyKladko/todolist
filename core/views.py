@@ -1,7 +1,9 @@
 from rest_framework import generics, status, exceptions
 from rest_framework.response import Response
-from django.contrib.auth import authenticate, login
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import authenticate, login, logout
 
+from core.models import User
 from core.serializers import CreateUserSerializer, LoginSerializer, ProfileSerializer
 
 
@@ -28,3 +30,14 @@ class LoginView(generics.GenericAPIView):
         login(request=request, user=user)
 
         return Response(ProfileSerializer(user).data)
+
+
+class ProfileView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self) -> User:
+        return self.request.user
+
+    def perform_destroy(self, instance: User) -> None:
+        logout(request=self.request)
