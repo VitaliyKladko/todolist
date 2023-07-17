@@ -1,11 +1,7 @@
 from django.db import models
 
 from core.models import User
-
-
-class BaseModel(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+from todolist.models import BaseModel
 
 
 class GoalCategory(BaseModel):
