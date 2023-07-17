@@ -3,7 +3,7 @@ from django.urls import path
 from goals.apps import GoalsConfig
 from goals.views.categories import CategoryCreateView, CategoryListView, CategoryDetailView
 
-app_name = GoalsConfig
+app_name = GoalsConfig.name
 
 urlpatterns = [
     path('goal_category/create', CategoryCreateView.as_view(), name='create-category'),
