@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions, filters
+from django.db import transaction
 
-from goals.models import GoalCategory
+from goals.models import GoalCategory, Goal
 from goals.permissions import GoalCategoryPermission
 from goals.serializers import GoalCategorySerializer, GoalCategoryWithUserSerializer
 
@@ -29,6 +30,9 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return GoalCategory.objects.select_related('user').exclude(is_deleted=True)
 
-    def perform_destroy(self, instance: GoalCategory):
-        instance.is_deleted = True
-        instance.save()
+    def perform_destroy(self, instance: GoalCategory) -> None:
+        # делаем данные атомарными, в случае ошибки перед instance.goal_set упадет все
+        with transaction.atomic():
+            instance.is_deleted = True
+            instance.save()
+            instance.goal_set.update(status=Goal.Status.archived)  # при удалении категории помечаем goals удаленными
