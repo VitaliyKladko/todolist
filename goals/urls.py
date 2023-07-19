@@ -21,3 +21,4 @@ urlpatterns = [
     path('goal_comment/list', GoalCommentList.as_view(), name='goals_comments-list'),
     path('goal_comment/<int:pk>', GoalCommentDetailView.as_view(), name='goal-comment-details')
 ]
+
